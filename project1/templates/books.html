@@ -1,0 +1,96 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Home
+{% endblock %}
+
+{% block main %}
+
+<!-- After posting a review: display alert if title or review are too long -->
+{% if longreview %}
+<div class="alert alert-danger" role="alert">
+    Title or review too long!
+</div>
+{% endif %}
+
+<!-- After posting a review: display alert if title does not contain alphanumeric characters -->
+{% if wrongtitle %}
+<div class="alert alert-danger" role="alert">
+    Title must contain at least one letter or number!
+</div>
+{% endif %}
+
+<!-- Display information about the title -->
+<h1>{{ rows.title }}</h1>
+<div class="container-fluid" id="maindiv">
+    <div class="row">
+        <div class="col" id="border-right">
+            <h2>About...</h2>
+            <h5>ISBN: {{ rows.isbn }}</h5>
+            <h5>Author/s: {{ rows.name }}</h5>
+            <h5>Publication year: {{ rows.year }}</h5>
+            <h5>Current rating: {{ current_rating.average|float }}</h5>
+            <h5>Rated by: {{ current_rating.count }} </h5><br>
+            <h5>Goodbooks - current rating: {{ goodrating }}</h5>
+            <h5>Goodbooks - rated by: {{ goodcount }}</h5><br>
+            <h6><a href="{{ url_for('api', isbn=rows.isbn) }}"> Get API </a></h6>
+        </div>
+        <div class="col">
+            <h2>Leave a review</h2>
+            <!-- If logged in user hasn't reviewed the book, allow fo review form to display -->
+            {% if review_checker == None %}
+                <form action="{{ url_for('books', isbn=rows.isbn) }}" method="post">
+                    <div class="form-group">
+                        <input type="text" name="header" class="form-control" placeholder="Title" autocomplete="off" aria-describedby="titleinfo" required>
+                        <small id="titlewinfo" class="form-text text-muted">Max 32 characters.</small>
+                    </div>
+                    <div class="form-group">
+                        <textarea autocomplete="off" class="form-control" name="review" placeholder="Type a Review" type="text" rows="3" aria-describedby="reviewinfo"></textarea>
+                        <small id="reviewinfo" class="form-text text-muted">Max 500 characters.</small>
+                    </div>
+                    <div class="form-group">
+                        <h4>Your rating:</h4>
+                        <select class="form-control inh4ne" id="rating" name="rating">
+                            <option selected>1</option>
+                            <option>2</option>
+                            <option>3</option>
+                            <option>4</option>
+                            <option>5</option>
+                        </select>
+                    </div>
+                    <button id="reviewbutton" class="btn" type="submit">Submit review</button>
+                </form>
+            {% else %}
+                <h4>You have already reviewed this book!</h4>
+                <h4>Your rating is {{ review_checker.rating }}</h4>.
+            {% endif %}
+        </div>
+    </div>
+</div>
+<div class="border-top mt-5">
+    <h2>Reviews:</h2>
+</div>
+<!-- If there are no reviews in database, display a message -->
+{% if not review_displayer %}
+    <h4>Sorry, no reviews yet!</h4>
+{% else %}
+    <div id="reviews">
+          <!-- Iterate through reviews to display them -->
+          {% for r in review_displayer %}
+              <div class="card">
+                  <div class="card-header">
+                      {{ r.header }}
+                      <time style="float:right;">{{ r.timestamp }}</time>
+                  </div>
+                  <div class="card-body">
+                      <blockquote class="blockquote mb-0">
+                          <p class="card-text">{{ r.review }}</p>
+                          <footer class="blockquote-footer">{{ r.username }}, rating: {{ r.rating }}</footer>
+                      </blockquote>
+                  </div>
+              </div>
+          {% endfor %}
+    </div>
+{% endif %}
+
+{% endblock %}

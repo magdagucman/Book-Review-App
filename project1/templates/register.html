@@ -1,0 +1,70 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Register
+{% endblock %}
+
+{% block main %}
+
+<!-- If username already in database, display alert -->
+{% if userexists %}
+<div class="alert alert-danger" role="alert">
+    Username already exists
+</div>
+{% endif %}
+
+<!-- If username is too long, display alert -->
+{% if longuser %}
+<div class="alert alert-danger" role="alert">
+    Username too long
+</div>
+{% endif %}
+
+<!-- If username contains non-alphanumeric characters, display alert -->
+{% if wronguser %}
+<div class="alert alert-danger" role="alert">
+    Username contains forbidden characters
+</div>
+{% endif %}
+
+<!-- If e-mail is already in database, display alert -->
+{% if emailexists %}
+<div class="alert alert-danger" role="alert">
+    E-mail already exists
+</div>
+{% endif %}
+
+<!-- If password and confirmation don't match, display alert -->
+{% if pasnotcon %}
+<div class="alert alert-danger" role="alert">
+    Password and confirmation don't match
+</div>
+{% endif %}
+
+<!-- If password is shorter than 8 characters, display alert -->
+{% if shortpass %}
+<div class="alert alert-danger" role="alert">
+    Password too short
+</div>
+{% endif %}
+
+<!-- Display registration form -->
+<label for="register">Register:</label>
+<form action="{{ url_for('register') }}" method="post">
+    <div class="form-group">
+        <input autocomplete="off" autofocus class="form-control" name="username" placeholder="Username" type="text" aria-describedby="usreq" required>
+        <small id="usreq" class="form-text text-muted">Max 32 characters, only letters and numbers allowed</small>
+    </div>
+    <div class="form-group">
+        <input autocomplete="off" autofocus class="form-control" name="e-mail" placeholder="E-mail" type="email" required>
+    </div>
+    <div class="form-group">
+        <input autocomplete="off" class="form-control" name="password" placeholder="Password" type="password" aria-describedby="passreq" required>
+        <small id="passreq" class="form-text text-muted">Min 8 characters</small>
+    </div>
+    <div class="form-group">
+        <input autocomplete="off" class="form-control" name="confirmation" placeholder="Confirm Password" type="password" required>
+    </div>
+    <button class="btn" type="submit">Register</button>
+</form>
+{% endblock %}

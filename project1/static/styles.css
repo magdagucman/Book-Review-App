@@ -1,0 +1,205 @@
+a {
+  color: #065d40;
+}
+
+a:hover {
+  color: #9ee0ca;
+}
+
+button:hover {
+  background-color: #9ee0ca;
+  color: #065d40;
+  border: 1px solid #9ee0ca;
+}
+
+button:disabled {
+  background-color: grey;
+  color: white;
+  border: 1px solid grey;
+}
+
+footer {
+  margin-top: 5%;
+}
+
+form, .alert {
+  max-width: 30%;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+h1 {
+  text-align: center;
+  font-family: "Allura";
+  font-size: 5em;
+  margin-top: 3%;
+  margin-bottom: 4%;
+}
+
+h2 {
+  text-align: center;
+  font-family: "Allura";
+  font-size: 3.5em;
+  margin-top: 3%;
+  margin-bottom: 2%;
+}
+
+h3 {
+  text-align: center;
+  font-family: "Allura";
+  font-size: 2.5em;
+  margin-top: 3%;
+  margin-bottom: 3%;
+}
+
+h4 {
+  text-align: center;
+  margin-top: 3%;
+  margin-bottom: 2%;
+}
+
+label {
+  text-align: center;
+  font-size: 1.5em;
+  font-family: arial, sans-serif;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+p {
+  font-style: italic;
+}
+
+table {
+  width: 100%;
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  margin-top: 1%;
+  margin-bottom: 5%;
+}
+
+td, tr, th {
+  border: 1px solid black;
+  padding: 10px;
+  text-align: left;
+}
+
+th {
+  background-color: #9ee0ca;
+}
+
+textarea {
+  margin-left: auto;
+  margin-right: auto;
+  width: 100%;
+  max-width: 100%;
+}
+
+#border-right {
+  border-right-width: 1px;
+  border-right-style: ridge;
+  border-right-color: lightgrey;
+}
+
+#reviews {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  height: 40vw;
+  overflow: auto;
+}
+
+.btn {
+  background-color: #065d40;
+  color: white;
+  border: 1px solid #065d40;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 5%;
+}
+
+.card, img {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 70%;
+  max-width: 70%;
+  margin-top: 2%;
+  margin-bottom: 1%;
+}
+
+.card-header {
+  font-size: 1.5em;
+}
+
+.navbar {
+  background-color: #065d40;
+  border: 10px solid #065d40;
+  max-width: 100%;
+}
+
+.nav-item {
+  background-color: #065d40;
+}
+
+.nav-link {
+  background-color: #065d40;
+  color: white;
+}
+
+.row, .col {
+  width: 100%;
+}
+
+@media (max-width: 800px) {
+  form {
+    max-width: 80%;
+  }
+
+  h1 {
+    font-family: arial, sans-serif;
+    font-weight: bold;
+    font-size: 2.5em;
+    margin-top: 1%;
+  }
+
+  h2 {
+    font-family: arial, sans-serif;
+    font-size: 2.5em;
+    margin-top: 15%;
+  }
+
+  h3 {
+    font-size: 1em;
+    font-family: arial, sans-serif;
+  }
+
+  h5 {
+    font-size: 0.9em;
+  }
+
+  td, th {
+    padding: 3px;
+    font-size: 0.8em;
+  }
+
+  #border-right {
+    border-right-style: hidden;
+    border-bottom-width: 1px;
+    border-bottom-style: ridge;
+    border-bottom-color: lightgrey;
+  }
+
+  .hidden {
+    visibility: hidden;
+  }
+
+  .nav-item {
+    font-size: 0.9em;
+  }
+}
+
+/*# sourceMappingURL=styles.css.map */

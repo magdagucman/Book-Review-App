@@ -1,0 +1,85 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Search
+{% endblock %}
+
+{% block main %}
+<form action="{{ url_for('search') }}" method="post">
+    <div class="form-group">
+        <label for="searchby">Search by:</label>
+        <select class="form-control" id="searchby" name="searchby">
+            <option value='ISBN' selected>ISBN</option>
+            <option value='Title'>Title</option>
+            <option value='Author'>Author</option>
+        </select> <br>
+        <input autocomplete="off" class="form-control" id="isbn" name="isbn" placeholder="ISBN" type="text">
+        <input autocomplete="off" class="form-control" id="title" name="title" placeholder="Title" type="text" hidden>
+        <input autocomplete="off" class="form-control" id="author" name="author" placeholder="Author" type="text" hidden>
+
+        <button class="btn" type="submit" id="thisbutton" disabled>Submit</button>
+    </div>
+</form>
+
+<!-- This script manages display of input field that matches chosen 'search by' value and enables button on input -->
+<script>
+  document.querySelector('#author').onkeyup = function() {
+    if (document.querySelector('#author').value === '') {
+        document.querySelector('#thisbutton').disabled = true;
+    }
+    else {
+        document.querySelector('#thisbutton').disabled = false;
+    }
+  }
+
+  document.querySelector('#title').onkeyup = function() {
+    if (document.querySelector('#title').value === '') {
+        document.querySelector('#thisbutton').disabled = true;
+    }
+    else {
+        document.querySelector('#thisbutton').disabled = false;
+    }
+  }
+
+  document.querySelector('#isbn').onkeyup = function() {
+    if (document.querySelector('#isbn').value === '') {
+        document.querySelector('#thisbutton').disabled = true;
+    }
+    else {
+        document.querySelector('#thisbutton').disabled = false;
+    }
+  }
+
+  document.querySelector('#searchby').onchange = function() {
+    if (document.querySelector('#searchby').value === 'ISBN') {
+      document.querySelector('#isbn').hidden = false;
+      document.querySelector('#isbn').disabled = false;
+      document.querySelector('#title').hidden = true;
+      document.querySelector('#author').hidden = true;
+      document.querySelector('#title').disabled = true;
+      document.querySelector('#author').disabled = true;
+    }
+    if (document.querySelector('#searchby').value === 'Title') {
+      document.querySelector('#title').hidden = false;
+      document.querySelector('#title').disabled = false;
+      document.querySelector('#isbn').hidden = true;
+      document.querySelector('#author').hidden = true;
+      document.querySelector('#isbn').disabled = true;
+      document.querySelector('#author').disabled = true;
+    }
+    if (document.querySelector('#searchby').value === 'Author') {
+      document.querySelector('#author').hidden = false;
+      document.querySelector('#author').disabled = false;
+      document.querySelector('#title').hidden = true;
+      document.querySelector('#isbn').hidden = true;
+      document.querySelector('#title').disabled = true;
+      document.querySelector('#isbn').disabled = true;
+    }
+
+    document.querySelector('#thisbutton').disabled = true;
+    document.querySelector('#isbn').value = '';
+    document.querySelector('#title').value = '';
+    document.querySelector('#author').value = '';
+  }
+</script>
+{% endblock %}

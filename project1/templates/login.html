@@ -1,0 +1,27 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Log In
+{% endblock %}
+
+{% block main %}
+
+<!-- If username and/or password are not in database, display alert -->
+{% if wronginput %}
+<div class="alert alert-danger" role="alert">
+  Wrong username or password
+</div>
+{% endif %}
+
+<!-- Display log in form -->
+<label for="login">Log in:</label>
+<form action="{{ url_for('login') }}" method="post">
+    <div class="form-group">
+        <input autocomplete="off" autofocus class="form-control" name="username" placeholder="Username" type="text" required>
+    </div>
+    <div class="form-group">
+        <input autocomplete="off" class="form-control" name="password" placeholder="Password" type="password" required>
+    </div>
+    <button class="btn" type="submit">Log In</button>
+</form>
+{% endblock %}
