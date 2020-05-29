@@ -5,6 +5,12 @@
 {% endblock %}
 
 {% block main %}
+<!-- After query: display alert if input in title or author fields does not contain at least one alphanumeric character -->
+{% if wronginput %}
+<div class="alert alert-danger" role="alert">
+    Query must contain at least one letter or number!
+</div>
+{% endif %}
 <form action="{{ url_for('search') }}" method="post">
     <div class="form-group">
         <label for="searchby">Search by:</label>
