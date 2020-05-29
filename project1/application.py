@@ -156,17 +156,47 @@ def search():
         # If user searched by ISBN
         if isbn_input:
 
+            # Ensure ISBN input has at least one alphanumeric character
+            haschar = False
+            wronginput = False
+            for char in isbn_input:
+                if char.isalnum() == True:
+                    haschar = True
+            if haschar == False:
+                wronginput = True
+                return render_template("search.html", wronginput=wronginput)
+
             # Query database for isbn, title, author and year
             rows = rows = db.execute("SELECT books.isbn as isbn, title, year, name FROM books INNER JOIN authors ON books.isbn=authors.isbn INNER JOIN people ON authors.person_id=people.id WHERE books.isbn ILIKE :isbn ORDER BY isbn", {'isbn': f"%{isbn_input}%"}).fetchall()
 
         # If user searched by title
         if title_input:
 
+            # Ensure title input has at least one alphanumeric character
+            haschar = False
+            wronginput = False
+            for char in title_input:
+                if char.isalnum() == True:
+                    haschar = True
+            if haschar == False:
+                wronginput = True
+                return render_template("search.html", wronginput=wronginput)
+
             # Query database for isbn, title, author and year
             rows = db.execute("SELECT books.isbn as isbn, title, year, name FROM books INNER JOIN authors ON books.isbn=authors.isbn INNER JOIN people ON authors.person_id=people.id WHERE title ILIKE :title ORDER BY title", {'title': f"%{title_input}%"}).fetchall()
 
         # If user searched by author
         if author_input:
+
+            # Ensure author input has at least one alphanumeric character
+            haschar = False
+            wronginput = False
+            for char in author_input:
+                if char.isalnum() == True:
+                    haschar = True
+            if haschar == False:
+                wronginput = True
+                return render_template("search.html", wronginput=wronginput)
 
             # Query database for author
             rows = db.execute("SELECT books.isbn as isbn, title, year, name FROM books INNER JOIN authors ON books.isbn=authors.isbn INNER JOIN people ON authors.person_id=people.id WHERE name ILIKE :name ORDER BY name, title", {'name': f"%{author_input}%"}).fetchall()
@@ -246,11 +276,13 @@ def books(isbn):
                            {"user_id": session["user_id"], "isbn": str(isbn), "review": review, "rating": rating, "header": header})
                 db.commit()
 
-                # Update review_displayer and review_checker
+                # Update review_displayer, review_checker and current_rating
                 review_displayer = db.execute("SELECT review, rating, username, header, timestamp FROM reviews JOIN users ON users.id = reviews.user_id WHERE isbn = :isbn ORDER BY timestamp DESC",
                                               {"isbn": str(isbn)}).fetchall()
                 review_checker = db.execute("SELECT * FROM reviews WHERE isbn = :isbn AND user_id = :user_id",
                                         {"isbn": str(isbn), "user_id": session["user_id"]}).fetchone()
+                current_rating = db.execute("SELECT AVG(rating) as average, COUNT (rating) as count FROM reviews WHERE isbn = :isbn",
+                                            {"isbn": str(isbn)}).fetchone()
 
                 return render_template("books.html", review_displayer=review_displayer, review_checker=review_checker, current_rating=current_rating, goodcount=goodcount, goodrating=goodrating, rows=rows)
 
