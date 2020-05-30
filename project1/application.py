@@ -229,10 +229,8 @@ def books(isbn):
         if res.status_code != 200:
             raise Exception("ERROR: API request unsuccessful.")
         data = res.json()
-        goodcount_list = data["books"]
-        goodrating_list = data["books"]
-        goodcount = goodcount_list[0]["work_ratings_count"]
-        goodrating = goodrating_list[0]["average_rating"]
+        goodcount = data["books"]["work_ratings_count"]
+        goodrating_list = data["books"]["average_rating"]
 
         # Query database for local average rating and rating count
         current_rating = db.execute("SELECT AVG(rating) as average, COUNT (rating) as count FROM reviews WHERE isbn = :isbn",
